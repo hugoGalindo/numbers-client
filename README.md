@@ -14,3 +14,6 @@ Simple client to test this Web Service: https://github.com/isabel22/numbers-serv
 3. Press the `Submit` button
 4. The result will be shown at the buttom
 
+### Example
+
+![alt text](https://raw.githubusercontent.com/isabel22/numbers-client/master/example.png)

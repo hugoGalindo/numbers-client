@@ -1,0 +1,63 @@
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script>
+  function setResponse(data) {
+      document.getElementById("response").innerHTML = data
+  }
+
+  function displayResponse() {
+    var xhttp = new XMLHttpRequest();
+    var input = document.getElementById("number").value
+    if (input == "") {
+      setResponse("Please enter a number");
+    } else {
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var array_numbers = JSON.parse(this.responseText);
+          var numbers = array_numbers["numbers"]
+          setResponse(numbers.join(', '));
+        }
+        if (this.readyState == 4 && this.status == 400) {
+          setResponse("Invalid number");
+        }
+      };
+      xhttp.open("GET", "https://serene-meadow-78539.herokuapp.com/numbers/"+input, true);
+      xhttp.send();
+    }
+  }
+</script>
+
+<style>
+  .container {
+    position: relative;
+    height: 100%;
+  }
+
+  .jumbotron {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .response {
+    position: absolute;
+    top: 80%;
+    font-size: 15px;
+    overflow: scroll;
+  }
+
+</style>
+
+<section>
+  <div class="container">
+		<div class="jumbotron">
+      <input class="btn btn-lg" name="number" id="number" type="number" placeholder="Enter a number" required>
+      <button class="btn btn-info btn-lg" onclick="displayResponse()">Submit</button>
+    </div>
+    <div id="response" class="btn btn-lg response"></div>
+	</div>
+</section>

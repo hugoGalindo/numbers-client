@@ -1,6 +1,7 @@
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <script>
@@ -8,6 +9,24 @@
       response = document.getElementById("response")
       response.innerHTML = data
       response.classList.remove("-disabled");
+      disableSpinner()
+  }
+
+  function enableSpinner() {
+    hideResponse()
+    loader = document.getElementById("loading")
+    loader.classList.remove("-disabled")
+  }
+
+  function disableSpinner() {
+    loader = document.getElementById("loading")
+    loader.classList.add("-disabled")
+  }
+
+  function hideResponse() {
+    response = document.getElementById("response")
+    response.innerHTML = ""
+    response.classList.add("-disabled");
   }
 
   function displayResponse() {
@@ -17,6 +36,9 @@
       setResponse("Please enter a number");
     } else {
       xhttp.onreadystatechange = function() {
+        if (this.readyState == 2 || this.readyState == 3) {
+          enableSpinner()
+        }
         if (this.readyState == 4 && this.status == 200) {
           var array_numbers = JSON.parse(this.responseText);
           var numbers = array_numbers["numbers"]
@@ -49,7 +71,6 @@
     position: absolute;
     top: 50%;
     font-size: 15px;
-    overflow: scroll;
   }
 
   .-disabled {
@@ -65,5 +86,6 @@
       <button class="btn btn-info btn-lg" onclick="displayResponse()">Submit</button>
     </div>
     <div id="response" class="response alert alert-info -disabled"></div>
+    <center><i id="loading" class="response fa fa-spinner fa-spin -disabled" style="font-size:24px"></i></center>
 	</div>
 </section>

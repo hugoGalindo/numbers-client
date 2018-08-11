@@ -5,7 +5,9 @@
 
 <script>
   function setResponse(data) {
-      document.getElementById("response").innerHTML = data
+      response = document.getElementById("response")
+      response.innerHTML = data
+      response.classList.remove("-disabled");
   }
 
   function displayResponse() {
@@ -38,16 +40,20 @@
 
   .jumbotron {
     position: absolute;
-    top: 50%;
+    top: 30%;
     left:50%;
     transform: translate(-50%,-50%);
   }
 
   .response {
     position: absolute;
-    top: 80%;
+    top: 50%;
     font-size: 15px;
     overflow: scroll;
+  }
+
+  .-disabled {
+    display: none;
   }
 
 </style>
@@ -58,6 +64,6 @@
       <input class="btn btn-lg" name="number" id="number" type="number" placeholder="Enter a number" required>
       <button class="btn btn-info btn-lg" onclick="displayResponse()">Submit</button>
     </div>
-    <div id="response" class="btn btn-lg response"></div>
+    <div id="response" class="response alert alert-info -disabled"></div>
 	</div>
 </section>
